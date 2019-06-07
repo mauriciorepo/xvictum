@@ -33,9 +33,13 @@ public class FornecedorEndpoint {
 
 	@POST
 	@Consumes("application/json")
-	@Produces("application/json")
+	
 	public Response create(Fornecedor entity) {
+		System.out.println(entity);
 		em.persist(entity);
+		em.flush();
+		
+		System.out.println(em.contains(entity));
 		return Response.created(
 				UriBuilder.fromResource(FornecedorEndpoint.class)
 						.path(String.valueOf(entity.getId())).build()).build();

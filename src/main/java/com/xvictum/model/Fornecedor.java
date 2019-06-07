@@ -2,9 +2,13 @@ package com.xvictum.model;
 
 import javax.persistence.Entity;
 import java.io.Serializable;
+
+
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+
 import javax.persistence.Column;
 import javax.persistence.Version;
 import java.util.Date;
@@ -12,14 +16,29 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.hibernate.annotations.GenericGenerator;
+
+
+
+
 @Entity
 @XmlRootElement
 public class Fornecedor implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id", updatable = false, nullable = false)
+	
+	/*@GeneratedValue(generator="myGenerator")
+	@GenericGenerator(name="myGenerator", strategy="com.xvictum.rest.util.UseExistingIdOtherwiseGenerateUsingIdentity") 
+	*/
+	
+	@GenericGenerator(
+		    name = "native",
+		    strategy = "native"
+		)
+	@GeneratedValue(
+		    strategy= GenerationType.AUTO, generator="native")
+	@Column(name = "id",  nullable = false)
 	private Long id;
 	@Version
 	@Column(name = "version")
