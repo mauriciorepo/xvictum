@@ -76,7 +76,7 @@ public class AnoModeloEndpoint {
 		return Response.ok(entity).build();
 	}
 	
-	@GET
+	/*@GET
 	@Path("/modelo/{modelo_id:[0-9][0-9]*}")
     @Produces("application/json")
 	public Set<AnoModelo> findAnoModeloByModelo(@PathParam("modelo_id") Long id) {
@@ -85,7 +85,7 @@ public class AnoModeloEndpoint {
 		final Set<AnoModelo> results = entity.getAnoModelo();
 		
 		return results;
-	}
+	}*/
 	@GET
 	@Produces("application/json")
 	public List<AnoModelo> listAll(@QueryParam("start") Integer startPosition,

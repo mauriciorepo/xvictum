@@ -11,6 +11,8 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Version;
 
+import org.hibernate.annotations.GenericGenerator;
+
 
 
 
@@ -20,7 +22,12 @@ public class AnoModelo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GenericGenerator(
+		    name = "native",
+		    strategy = "native"
+		)
+	@GeneratedValue(
+		    strategy= GenerationType.AUTO, generator="native")
 	@Column(name = "id", updatable = false, nullable = false)
 	private Long id;
 	@Version

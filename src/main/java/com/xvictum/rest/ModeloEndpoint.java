@@ -1,10 +1,11 @@
 package com.xvictum.rest;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import javax.ejb.Stateful;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.OptimisticLockException;
@@ -23,8 +24,11 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
+
 import com.xvictum.model.Modelo;
 import com.xvictum.model.marca;
+
+
 
 /**
  * 
@@ -39,6 +43,7 @@ public class ModeloEndpoint {
 	@Consumes("application/json")
 	public Response create(Modelo entity) {
 		em.persist(entity);
+		
 		return Response.created(
 				UriBuilder.fromResource(ModeloEndpoint.class)
 						.path(String.valueOf(entity.getId())).build()).build();
@@ -55,13 +60,66 @@ public class ModeloEndpoint {
 		return Response.noContent().build();
 	}
 
+	@POST
+	@Consumes("application/json")
+	@Path("/criar/{id:[0-9][0-9]*}")
+	public Response lancaModelo(@PathParam("id") Long id , List<Modelo> listmodelo ){
+               
+               //Set<Modelo> listmodelo=marc.getModelo();
+               System.out.println(listmodelo.size());
+               //System.out.println(listmodelo.);
+               marca entityMarca= em.find(marca.class,id);
+		System.out.println(em.contains(entityMarca));
+		if(!em.contains(entityMarca) ){
+			System.out.println("é nulo");
+			return Response.status(Status.NOT_FOUND).build();
+			
+		}else{
+			//System.out.println("nao é nulo");
+			
+			for (Modelo mod : listmodelo) {
+				//System.out.println(mod.getCodigo() + mod.getModelo());
+				//Modelo modelo=new Modelo();
+				//modelo.setCodigo(mod.getCodigo());
+				//modelo.setModelo(mod.getModelo());
+				entityMarca.criaModelo(mod);
+				
+			}
+			em.flush();
+			
+			
+			//em.flush();
+			//System.out.println(entityMarca.getModelo());
+								
+			return Response.status(Status.ACCEPTED).build();
+			/*try {
+				//entityMarca.setModelo(marc.getModelo());
+				entityMarca.criaModelo(modelo);
+				
+				em.flush();
+				return Response.status(200).build();
+			} catch (Exception e) {
+				e.printStackTrace();
+				return Response.status(Status.CONFLICT).build();
+			}*/
+			
+			//System.out.println(entityMarca);
+			//em.persist(entityMarca);
+			//em.flush();
+			//entityMarca=em.merge(entityMarca);
+			
+				
+			//marca entityMarca= em.find(marca.class, cliente.getVeiculo().)
+		}
+    		
+	}
 	@GET
 	@Path("/{id:[0-9][0-9]*}")
 	@Produces("application/json")
 	public Response findById(@PathParam("id") Long id) {
 		TypedQuery<Modelo> findByIdQuery = em
 				.createQuery(
-						"SELECT DISTINCT m FROM Modelo m LEFT JOIN FETCH m.AnoModelo WHERE m.id = :entityId ORDER BY m.id",
+						"SELECT DISTINCT m FROM Modelo m LEFT JOIN FETCH m.AnoModelo WHERE m.id = :entityId ORDER BY m.modelo",
 						Modelo.class);
 		findByIdQuery.setParameter("entityId", id);
 		Modelo entity;
@@ -82,7 +140,7 @@ public class ModeloEndpoint {
 			@QueryParam("max") Integer maxResult) {
 		TypedQuery<Modelo> findAllQuery = em
 				.createQuery(
-						"SELECT DISTINCT m FROM Modelo m LEFT JOIN m.AnoModelo ORDER BY m.id",
+						"SELECT DISTINCT m FROM Modelo m  ORDER BY m.modelo",
 						Modelo.class);
 		if (startPosition != null) {
 			findAllQuery.setFirstResult(startPosition);
