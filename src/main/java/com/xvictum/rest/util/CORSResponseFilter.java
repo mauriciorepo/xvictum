@@ -22,7 +22,7 @@ public class CORSResponseFilter implements ContainerResponseFilter {
 		
 		//headers.add("Access-Control-Allow-Origin", "http://localhost:4200"); //allows CORS requests only coming from podcastpedia.org		
 		headers.add("Access-Control-Allow-Methods", "API, CRUNCHIFYGET, GET, POST, PUT, UPDATE, OPTIONS");			
-		headers.add("Access-Control-Allow-Headers", "X-Requested-With, Content-Type,responseType, X-Codingpedia, X-Mashape-Key,Accept ");
+		headers.add("Access-Control-Allow-Headers", "access-control-allow-headers,access-control-allow-methods,access-control-allow-origin,content-type,responsetype,X-Requested-With, Content-Type,responsetype ,x-rapidapi-key,x-rapidapi-host, X-Codingpedia, Accept ");
 		headers.add("Access-Control-Max-Age", "151200");
 	}
 

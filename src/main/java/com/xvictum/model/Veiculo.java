@@ -35,7 +35,22 @@ public class Veiculo implements Serializable {
 	@Column
 	private String chassi;
 
-	@Column
+    @Column
+    private String anofabricacao;
+    
+    @Column
+    private Long anomodelo;
+    	
+    
+    public Long getAnomodelo() {
+		return anomodelo;
+	}
+
+	public void setAnomodelo(Long anomodelo) {
+		this.anomodelo = anomodelo;
+	}
+
+		@Column
 	private long km;
 
 	@Column
@@ -77,10 +92,10 @@ public class Veiculo implements Serializable {
 	@JoinColumn(name = "modelo_id")
 	private Modelo modelo;
 
-	@OneToOne
+	/*@OneToOne
 	@JoinColumn(name = "anomodelo_id")
 	private AnoModelo anomodelo;
-
+*/
 	@Column(nullable = false)
 	private boolean ativo;
 
@@ -102,18 +117,94 @@ public class Veiculo implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
+		if (this == obj)
 			return true;
-		}
-		if (!(obj instanceof Veiculo)) {
+		if (obj == null)
 			return false;
-		}
+		if (getClass() != obj.getClass())
+			return false;
 		Veiculo other = (Veiculo) obj;
-		if (id != null) {
-			if (!id.equals(other.id)) {
+		if (altura == null) {
+			if (other.altura != null)
 				return false;
-			}
-		}
+		} else if (!altura.equals(other.altura))
+			return false;
+		if (ativo != other.ativo)
+			return false;
+		if (chassi == null) {
+			if (other.chassi != null)
+				return false;
+		} else if (!chassi.equals(other.chassi))
+			return false;
+		if (combustivel == null) {
+			if (other.combustivel != null)
+				return false;
+		} else if (!combustivel.equals(other.combustivel))
+			return false;
+		if (comprimento == null) {
+			if (other.comprimento != null)
+				return false;
+		} else if (!comprimento.equals(other.comprimento))
+			return false;
+		if (cor == null) {
+			if (other.cor != null)
+				return false;
+		} else if (!cor.equals(other.cor))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (km != other.km)
+			return false;
+		if (marca == null) {
+			if (other.marca != null)
+				return false;
+		} else if (!marca.equals(other.marca))
+			return false;
+		if (modelo == null) {
+			if (other.modelo != null)
+				return false;
+		} else if (!modelo.equals(other.modelo))
+			return false;
+		if (nummotor == null) {
+			if (other.nummotor != null)
+				return false;
+		} else if (!nummotor.equals(other.nummotor))
+			return false;
+		if (pesomax == null) {
+			if (other.pesomax != null)
+				return false;
+		} else if (!pesomax.equals(other.pesomax))
+			return false;
+		if (placa == null) {
+			if (other.placa != null)
+				return false;
+		} else if (!placa.equals(other.placa))
+			return false;
+		if (portas == null) {
+			if (other.portas != null)
+				return false;
+		} else if (!portas.equals(other.portas))
+			return false;
+		if (potencia == null) {
+			if (other.potencia != null)
+				return false;
+		} else if (!potencia.equals(other.potencia))
+			return false;
+		if (renavam == null) {
+			if (other.renavam != null)
+				return false;
+		} else if (!renavam.equals(other.renavam))
+			return false;
+		if (version != other.version)
+			return false;
+		if (volume == null) {
+			if (other.volume != null)
+				return false;
+		} else if (!volume.equals(other.volume))
+			return false;
 		return true;
 	}
 
@@ -121,7 +212,24 @@ public class Veiculo implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((altura == null) ? 0 : altura.hashCode());
+		result = prime * result + (ativo ? 1231 : 1237);
+		result = prime * result + ((chassi == null) ? 0 : chassi.hashCode());
+		result = prime * result + ((combustivel == null) ? 0 : combustivel.hashCode());
+		result = prime * result + ((comprimento == null) ? 0 : comprimento.hashCode());
+		result = prime * result + ((cor == null) ? 0 : cor.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + (int) (km ^ (km >>> 32));
+		result = prime * result + ((marca == null) ? 0 : marca.hashCode());
+		result = prime * result + ((modelo == null) ? 0 : modelo.hashCode());
+		result = prime * result + ((nummotor == null) ? 0 : nummotor.hashCode());
+		result = prime * result + ((pesomax == null) ? 0 : pesomax.hashCode());
+		result = prime * result + ((placa == null) ? 0 : placa.hashCode());
+		result = prime * result + ((portas == null) ? 0 : portas.hashCode());
+		result = prime * result + ((potencia == null) ? 0 : potencia.hashCode());
+		result = prime * result + ((renavam == null) ? 0 : renavam.hashCode());
+		result = prime * result + version;
+		result = prime * result + ((volume == null) ? 0 : volume.hashCode());
 		return result;
 	}
 
@@ -182,6 +290,7 @@ public class Veiculo implements Serializable {
 		this.nummotor = nummotor;
 	}
 
+	
 	public String getPlaca() {
 		return placa;
 	}
@@ -213,6 +322,18 @@ public class Veiculo implements Serializable {
 	public void setPotencia(Long potencia) {
 		this.potencia = potencia;
 	}
+
+
+	public String getAnofabricacao() {
+		return anofabricacao;
+	}
+
+	public void setAnofabricacao(String anofabricacao) {
+		this.anofabricacao = anofabricacao;
+	}
+
+	
+
 
 	public Long getAltura() {
 		return altura;
@@ -246,13 +367,13 @@ public class Veiculo implements Serializable {
 		this.modelo = modelo;
 	}
 
-	public AnoModelo getAnomodelo() {
+	/*public AnoModelo getAnomodelo() {
 		return anomodelo;
 	}
 
 	public void setAnomodelo(AnoModelo anomodelo) {
 		this.anomodelo = anomodelo;
-	}
+	}*/
 
 	public boolean isAtivo() {
 		return ativo;

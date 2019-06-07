@@ -3,10 +3,14 @@ package com.xvictum.model;
 import javax.persistence.Entity;
 import java.io.Serializable;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Column;
 import javax.persistence.Version;
+
+import com.xvictum.model.suprimentos.Tipo_servico;
 
 @Entity
 public class Servicos implements Serializable {
@@ -25,7 +29,35 @@ public class Servicos implements Serializable {
 
 	@Column(nullable = false)
 	private String tipo_servicos;
+	
+	@OneToOne
+	@JoinColumn(name = "tipo_sistema_id")
+	private Tipo_sistema tipo_sistema;
 
+	public Tipo_sistema getTipo_sistema() {
+		return tipo_sistema;
+	}
+
+	public void setTipo_sistema(Tipo_sistema tipo_sistema) {
+		this.tipo_sistema = tipo_sistema;
+	}
+
+	public Tipo_servico getTipo_servico() {
+		return tipo_servico;
+	}
+
+	public void setTipo_servico(Tipo_servico tipo_servico) {
+		this.tipo_servico = tipo_servico;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	@OneToOne
+	@JoinColumn(name = "tipo_servico_id")
+	private Tipo_servico tipo_servico;
+	
 	public Long getId() {
 		return this.id;
 	}

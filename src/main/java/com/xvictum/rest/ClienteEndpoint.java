@@ -52,7 +52,8 @@ public class ClienteEndpoint {
 		em.remove(entity);
 		return Response.noContent().build();
 	}
-
+    
+	
 	@GET
 	@Path("/{id:[0-9][0-9]*}")
 	@Produces("application/json")

@@ -25,11 +25,11 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
 
-import com.xvictum.model.AnoModelo;
 import com.xvictum.model.Cliente;
 import com.xvictum.model.Modelo;
 import com.xvictum.model.Veiculo;
 import com.xvictum.model.marca;
+
 
 /**
  * 
@@ -63,11 +63,11 @@ public class VeiculoEndpoint {
 			for (Veiculo vec : cliente.getVeiculo()) {
                  marca Marca= vec.getMarca();
                  Modelo mod=vec.getModelo();
-                 AnoModelo anomodelo=vec.getAnomodelo();
+                 //AnoModelo anomodelo=vec.getAnomodelo();
 				
                  vec.setMarca(Marca);
                  vec.setModelo(mod);
-                 vec.setAnomodelo(anomodelo);
+                // vec.setAnomodelo(anomodelo);
 				entityCliente.criaVeiculo(vec);
 			}
 			
@@ -95,12 +95,13 @@ public class VeiculoEndpoint {
 	public Response findById(@PathParam("id") Long id) {
 		TypedQuery<Veiculo> findByIdQuery = em
 				.createQuery(
-						"SELECT DISTINCT v FROM Veiculo v LEFT JOIN FETCH v.marca LEFT JOIN FETCH v.modelo LEFT JOIN FETCH v.anomodelo WHERE v.id = :entityId ORDER BY v.id",
+						"SELECT DISTINCT v FROM Veiculo v WHERE v.id= :entityId",
 						Veiculo.class);
 		findByIdQuery.setParameter("entityId", id);
 		Veiculo entity;
 		try {
 			entity = findByIdQuery.getSingleResult();
+			System.out.println(entity);
 		} catch (NoResultException nre) {
 			entity = null;
 		}
@@ -114,10 +115,16 @@ public class VeiculoEndpoint {
 	@Produces("application/json")
 	public List<Veiculo> listAll(@QueryParam("start") Integer startPosition,
 			@QueryParam("max") Integer maxResult) {
+
 		TypedQuery<Veiculo> findAllQuery = em
 				.createQuery(
-						"SELECT DISTINCT v FROM Veiculo v LEFT JOIN FETCH v.marca LEFT JOIN FETCH v.modelo LEFT JOIN FETCH v.anomodelo ORDER BY v.id",
+						"SELECT DISTINCT v FROM Veiculo v  ORDER BY v.id",
 						Veiculo.class);
+		
+		/*TypedQuery<Veiculo> findAllQuery = em
+				.createQuery(
+						"SELECT DISTINCT v FROM Veiculo v LEFT JOIN FETCH v.marca LEFT JOIN FETCH v.modelo LEFT JOIN FETCH v.anomodelo ORDER BY v.id",
+						Veiculo.class);*/
 		if (startPosition != null) {
 			findAllQuery.setFirstResult(startPosition);
 		}
@@ -136,13 +143,22 @@ public class VeiculoEndpoint {
 		if (entity == null) {
 			return Response.status(Status.BAD_REQUEST).build();
 		}
-		if (id == null) {
-			return Response.status(Status.BAD_REQUEST).build();
+		if (id == null && entity!= null) {
+			
+			TypedQuery<Cliente> findCliente=em.createQuery("SELECT c FROM Cliente c join c.veiculo v WHERE v.id= : veiculoid  ",Cliente.class);
+			findCliente.setParameter("veiculoid", entity.getId() );
+			Cliente clienteEntity=findCliente.getSingleResult();
+			
+			//clienteEntity.criaVeiculo(entity);
+			entity = em.merge(entity);
+			return Response.status(Status.ACCEPTED).build();
 		}
 		/*if (!id.equals(entity.getId())) {
 			return Response.status(Status.CONFLICT).entity(entity).build();
 		}*/
 		if (em.find(Veiculo.class, entity.getId()) == null) {
+			
+			
 			return Response.status(Status.NOT_FOUND).build();
 		}
 		try {

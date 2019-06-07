@@ -43,8 +43,9 @@ public class marcaEndpoint {
 	@POST
 	@Consumes("application/json")
 	public Response create(marca entity) {
-		//System.out.println("Post: "+entity);
+		System.out.println("Post: "+entity);
 		em.persist(entity);
+		
 		return Response.created(
 				UriBuilder.fromResource(marcaEndpoint.class)
 						.path(String.valueOf(entity.getId())).build()).build();
@@ -116,6 +117,22 @@ public class marcaEndpoint {
 			}
 
 	@GET
+	@Path("marcasingle/{id:[0-9][0-9]*}")
+	@Produces("application/json")
+	public marca findMarcaByModelo(@PathParam("id") Long id) {
+		
+		TypedQuery<marca> findbymodelo= em.createQuery("SELECT DISTINCT m FROM marca m  JOIN m.modelo mode WHERE mode.id = :modeloid",marca.class);
+	    
+		//TypedQuery<marca> findbymodelo= em.createQuery("SELECT DISTINCT m FROM marca m WHERE m.id in (SELECT mode.marca_id FROM modelo mode WHERE mode.id= :modeloid)",marca.class);
+	    findbymodelo.setParameter("modeloid", id);
+	    marca m=findbymodelo.getSingleResult();
+	    System.out.println(m.getNome());
+	    return m;
+	
+	}
+	
+	
+	@GET
 	//@Path("/all")
 	@Produces( "application/json")
 	public List<marca> listAll(@QueryParam("start") Integer startPosition,
@@ -135,7 +152,7 @@ public class marcaEndpoint {
 			findAllQuery.setMaxResults(maxResult);
 		}
 		final List<marca> results = findAllQuery.getResultList();
-		System.out.println(results);
+		//System.out.println(results);
 		
 		return results;
 	}
