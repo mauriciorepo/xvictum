@@ -1,8 +1,12 @@
+C:\projetos\xvictum\src\main\java\com\xvictum\model\suprimentos\ConversaoMedidas.java
+C:\projetos\xvictum\src\main\java\com\xvictum\rest\suprimentos\GruposEndpoint.java
+C:\projetos\xvictum\src\main\java\com\xvictum\model\suprimentos\TiposProdutos.java
 C:\projetos\xvictum\src\main\java\com\xvictum\model\ContasaReceber.java
 C:\projetos\xvictum\src\main\java\com\xvictum\model\Modelo.java
 C:\projetos\xvictum\src\main\java\com\xvictum\rest\FornecedorEndpoint.java
 C:\projetos\xvictum\src\main\java\com\xvictum\model\Cliente.java
 C:\projetos\xvictum\src\main\java\com\xvictum\model\Bancos.java
+C:\projetos\xvictum\src\main\java\com\xvictum\model\suprimentos\Grupos.java
 C:\projetos\xvictum\src\main\java\com\xvictum\rest\RestApplication.java
 C:\projetos\xvictum\src\main\java\com\xvictum\model\CoberturaPlano.java
 C:\projetos\xvictum\src\main\java\com\xvictum\model\ContasBancarias.java
@@ -28,6 +32,7 @@ C:\projetos\xvictum\src\main\java\com\xvictum\model\AnoModelo.java
 C:\projetos\xvictum\src\main\java\com\xvictum\model\PlanodeContas.java
 C:\projetos\xvictum\src\main\java\com\xvictum\rest\util\jaxrsClient.java
 C:\projetos\xvictum\src\main\java\com\xvictum\model\Fornecedor.java
+C:\projetos\xvictum\src\main\java\com\xvictum\model\suprimentos\Inventario.java
 C:\projetos\xvictum\src\main\java\com\xvictum\rest\marcaEndpoint.java
 C:\projetos\xvictum\src\main\java\com\xvictum\model\suprimentos\Tipo_servico.java
 C:\projetos\xvictum\src\main\java\com\xvictum\model\Tipo_sistema.java
