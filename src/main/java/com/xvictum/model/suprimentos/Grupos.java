@@ -7,12 +7,21 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import java.io.Serializable;
 import javax.persistence.Version;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
+@XmlRootElement
 public class Grupos implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GenericGenerator(
+		    name = "native",
+		    strategy = "native"
+		)
+	@GeneratedValue(
+		    strategy= GenerationType.AUTO, generator="native")
 	@Column(name = "id", updatable = false, nullable = false)
 	private Long id;
 	private static final long serialVersionUID = 1L;
